@@ -2,17 +2,15 @@
   create_tables.sql - creates all tables for ketoboy
 */
 
-create database ketoboy;
-
-create table ketoboy.user(
-  user_id INT PRIMARY KEY,
+create table user(
+  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
   username CHAR(20) NOT NULL,
   password CHAR(20) NOT NULL
 );
 
-create table ketoboy.calorie(
-  calorie_id INT PRIMARY KEY,
-  user_id INT NOT NULL,
-  calorie INT NOT NULL,
+create table calorie(
+  calorie_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  calorie INTEGER NOT NULL,
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 )
