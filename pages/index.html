@@ -3,13 +3,14 @@
     <title>Hello World!</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/controllers/login-form.controller.js"></script>
   </head>
   <body ng-app="ketoboy">
     <h1>Login to Ketoboy!</h1>
-    <form ng-submit="$ctrl.submit()" ng-controller="LoginFormController">
-      Username: <input type="text" /><br />
-      Password: <input type="text" /><br />
-      <input type="submit" />
+    <form ng-controller="LoginFormController as $ctrl">
+      Username: <input type="text" ng-model="user.username"/><br />
+      Password: <input type="password" ng-model="user.password"/><br />
+      <input type="submit" ng-click="$ctrl.submit(user)"/>
     </form>
   </body>
 </html>
