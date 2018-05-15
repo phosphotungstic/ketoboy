@@ -62,3 +62,6 @@ typings/
 
 #DS_STORE
 .DS_store
+
+# ignore code workspace
+ketoboy.code-workspace
