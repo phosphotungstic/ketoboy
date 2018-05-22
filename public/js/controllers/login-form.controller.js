@@ -9,6 +9,12 @@ function LoginFormController($http) {
   ctrl.submit = function(user) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    $http.post('/api/login', user, {headers: headers});
+    $http.post('/api/login', user, {headers: headers})
+      .then(function() {
+        console.log('success');
+      })
+      .catch(function() {
+        console.log('oof');
+      });
   }
 }

@@ -8,6 +8,8 @@ var squel = require("squel");
 var db = new sqlite3.Database('./ketoboy.db');
 
 app.use(express.static('public'));
+app.use('/scripts/angular', express.static('node_modules/angular'));
+app.use('/scripts/angular-route', express.static('node_modules/angular-route'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -37,12 +39,13 @@ function login(req, res) {
         .where("username = '" + username + "'")
         .where("password = '" + password + "'")
         .toString();
-    ;
 
     db.get(query, function(err, row) {
         if(err) res.send('error');
         if(row == undefined) {
-          res.send('user/pass not found');
+          res
+            .status(401)
+            .send('user/pass not found');
         }
         else {
           res.send('success');
