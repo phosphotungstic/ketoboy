@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 
 var sqlite3 = require('sqlite3').verbose();
 var squel = require("squel");
-var db = new sqlite3.Database('./ketoboy.db');
 
 app.use(express.static('public'));
 app.use('/scripts/angular', express.static('node_modules/angular'));
@@ -14,7 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //pages
-app.get('/', home);
+app.get('/', index);
+app.get('/home', home);
 
 //api
 app.post('/api/login', login);
@@ -22,11 +22,12 @@ app.post('/api/login', login);
 
 app.listen(3000, () => console.log('Example app listening on port 3000'));
 
-function home(req, res) {
+function index(req, res) {
   res.sendFile(__dirname + '/pages/index.html');
 }
 
 function login(req, res) {
+  var db = new sqlite3.Database('./ketoboy.db');
   db.serialize(function() {  
     let username = req.body.username;
     let password = req.body.password;
@@ -43,15 +44,23 @@ function login(req, res) {
     db.get(query, function(err, row) {
         if(err) res.send('error');
         if(row == undefined) {
+          console.log('undef');
           res
             .status(401)
             .send('user/pass not found');
         }
         else {
-          res.send('success');
+          console.log('send file');
+          res
+            .status(200)
+            .send('authorized');
         }
     });
   });
   
   db.close();
+}
+
+function home(req, res) {
+  res.sendFile(__dirname + '/pages/home.html');
 }

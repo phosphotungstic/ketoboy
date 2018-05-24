@@ -1,1 +1,1 @@
-angular.module('ketoboy', []);
+angular.module('ketoboy', ['ngRoute']);

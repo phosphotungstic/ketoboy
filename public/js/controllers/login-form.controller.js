@@ -1,9 +1,9 @@
 angular.module('ketoboy')
   .controller('LoginFormController', LoginFormController);
 
-LoginFormController.$inject = ['$http'];
+LoginFormController.$inject = ['$http', '$window'];
 
-function LoginFormController($http) {
+function LoginFormController($http, $window) {
   var ctrl = this;
 
   ctrl.submit = function(user) {
@@ -11,7 +11,7 @@ function LoginFormController($http) {
     headers.append('Content-Type', 'application/json');
     $http.post('/api/login', user, {headers: headers})
       .then(function() {
-        console.log('success');
+        $window.location.href = '/home';
       })
       .catch(function() {
         console.log('oof');
