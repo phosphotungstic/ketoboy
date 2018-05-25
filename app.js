@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const assert = require('assert');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
-var sqlite3 = require('sqlite3').verbose();
-var squel = require("squel");
+const sqlite3 = require('sqlite3').verbose();
+const squel = require("squel");
 
 app.use(express.static('public'));
 app.use('/scripts/angular', express.static('node_modules/angular'));
