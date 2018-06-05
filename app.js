@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const assert = require('assert');
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 const sqlite3 = require('sqlite3').verbose();
 const squel = require("squel");
@@ -9,6 +10,7 @@ const squel = require("squel");
 app.use(express.static('public'));
 app.use('/scripts/angular', express.static('node_modules/angular'));
 app.use('/scripts/angular-route', express.static('node_modules/angular-route'));
+app.use('/scripts/angular-cookies', express.static('node_modules/angular-cookies'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -29,16 +31,18 @@ function index(req, res) {
 function login(req, res) {
   var db = new sqlite3.Database('./ketoboy.db');
   db.serialize(function() {  
-    let username = req.body.username;
-    let password = req.body.password;
+    let user = {
+      username: req.body.username,
+      password: req.body.password
+    };
 
     let query = 
       squel.select()
         .from('user')
         .field('username')
         .field('password')
-        .where("username = '" + username + "'")
-        .where("password = '" + password + "'")
+        .where("username = '" + user.username + "'")
+        .where("password = '" + user.password + "'")
         .toString();
 
     db.get(query, function(err, row) {
@@ -51,9 +55,17 @@ function login(req, res) {
         }
         else {
           console.log('send file');
+
+          var token = jwt.sign(user, 'oof', {
+            expiresIn: 10080 // in seconds
+          });
+
           res
             .status(200)
-            .send('authorized');
+            .send({
+                  auth: true,
+                  token: token
+                });
         }
     });
   });

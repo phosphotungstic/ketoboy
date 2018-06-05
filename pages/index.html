@@ -3,15 +3,20 @@
     <title>Hello World!</title>
     <script src="/scripts/angular/angular.js"></script>
     <script src="/scripts/angular-route/angular-route.js"></script>
+    <script src="/scripts/angular-cookies/angular-cookies.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/controllers/login-form.controller.js"></script>
+    <script src="/js/services/jwt.service.js"></script>
   </head>
-  <body ng-app="ketoboy">
+  <body ng-app="ketoboy" ng-controller="LoginFormController as $ctrl">
     <h1>Login to Ketoboy!</h1>
-    <form ng-controller="LoginFormController as $ctrl">
+    <form>
       Username: <input type="text" ng-model="user.username"/><br />
       Password: <input type="password" ng-model="user.password"/><br />
       <input type="submit" ng-click="$ctrl.submit(user)"/>
     </form>
+    <span ng-if="$ctrl.showError">
+      Incorrect username/password
+    </span>
   </body>
 </html>

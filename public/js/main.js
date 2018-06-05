@@ -1,1 +1,1 @@
-angular.module('ketoboy', ['ngRoute']);
+angular.module('ketoboy', ['ngRoute', 'ngCookies']);
