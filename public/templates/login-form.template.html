@@ -1,0 +1,9 @@
+<h1>Login to Ketoboy!</h1>
+<form>
+  Username: <input type="text" ng-model="user.username"/><br />
+  Password: <input type="password" ng-model="user.password"/><br />
+  <input type="submit" ng-click="$ctrl.submit(user)"/>
+</form>
+<span ng-if="$ctrl.showError">
+  Incorrect username/password
+</span>

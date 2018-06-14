@@ -19,10 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser())
 
-//pages
-// app.get('/home', home);
-app.get('/test', test);
 //api
+app.get('/test', test);
 app.post('/login', login);
 
 
@@ -42,33 +40,6 @@ function login(req, res, next) {
   })(req, res, next);
 }
 
-// function home(req, res, next) {
-//   console.log('home');
-//   res.redirect(__dirname + '/pages/home.html');
-// }
-
 function test(req, res, next) {
   res.send('test complete');
-}
-
-function checkAuth(successCB, failureCB, req, res, next) {
-  passport.authenticate('jwt', function(err, user, info) {
-    if(err) return next(err);
-    if(user) {
-      console.log('logged in');
-      successCB(user, res);
-    }
-    else {
-      console.log('not logged in');
-      failureCB(user, res);
-    }
-  })(req, res, next);
-}
-
-function loginRedirect(user, res) {
-  res.redirect('/');
-}
-
-function homeRedirect(user, res) {
-  res.redirect('/home');
 }
