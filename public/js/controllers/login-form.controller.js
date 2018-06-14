@@ -10,15 +10,16 @@ function LoginFormController($http, $window, JWTService) {
   ctrl.submit = function(user) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    $http.post('/api/login', user, {headers: headers})
+    $http.post('/login', user, {headers: headers})
       .then(function(res) {
-        if(res.data.auth) {
+        if(res.data.token) {
           JWTService.set(res.data.token);
           console.log(JWTService.get());
         }
-        $window.location.href = '/home';
+        $window.location.href = '/pages/home.html';
       })
-      .catch(function() {
+      .catch(function(e) {
+        console.log(e);
         ctrl.showError = true;
       });
   }

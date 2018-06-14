@@ -3,6 +3,10 @@ const app = express();
 const assert = require('assert');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+
+require('./js/passport.js');
 
 const sqlite3 = require('sqlite3').verbose();
 const squel = require("squel");
@@ -13,66 +17,58 @@ app.use('/scripts/angular-route', express.static('node_modules/angular-route'));
 app.use('/scripts/angular-cookies', express.static('node_modules/angular-cookies'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser())
 
 //pages
-app.get('/', index);
-app.get('/home', home);
-
+// app.get('/home', home);
+app.get('/test', test);
 //api
-app.post('/api/login', login);
+app.post('/login', login);
 
 
 app.listen(3000, () => console.log('Example app listening on port 3000'));
 
-function index(req, res) {
-  res.sendFile(__dirname + '/pages/index.html');
+function login(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      return res.status(401).json({ status: 'error', code: 'unauthorized' });
+    } else {
+      var token = jwt.sign(user, 'oof', {
+        expiresIn: 10080 // in seconds
+      });
+      return res.json({ token: token });
+    }
+  })(req, res, next);
 }
 
-function login(req, res) {
-  var db = new sqlite3.Database('./ketoboy.db');
-  db.serialize(function() {  
-    let user = {
-      username: req.body.username,
-      password: req.body.password
-    };
+// function home(req, res, next) {
+//   console.log('home');
+//   res.redirect(__dirname + '/pages/home.html');
+// }
 
-    let query = 
-      squel.select()
-        .from('user')
-        .field('username')
-        .field('password')
-        .where("username = '" + user.username + "'")
-        .where("password = '" + user.password + "'")
-        .toString();
-
-    db.get(query, function(err, row) {
-        if(err) res.send('error');
-        if(row == undefined) {
-          console.log('undef');
-          res
-            .status(401)
-            .send('user/pass not found');
-        }
-        else {
-          console.log('send file');
-
-          var token = jwt.sign(user, 'oof', {
-            expiresIn: 10080 // in seconds
-          });
-
-          res
-            .status(200)
-            .send({
-                  auth: true,
-                  token: token
-                });
-        }
-    });
-  });
-  
-  db.close();
+function test(req, res, next) {
+  res.send('test complete');
 }
 
-function home(req, res) {
-  res.sendFile(__dirname + '/pages/home.html');
+function checkAuth(successCB, failureCB, req, res, next) {
+  passport.authenticate('jwt', function(err, user, info) {
+    if(err) return next(err);
+    if(user) {
+      console.log('logged in');
+      successCB(user, res);
+    }
+    else {
+      console.log('not logged in');
+      failureCB(user, res);
+    }
+  })(req, res, next);
+}
+
+function loginRedirect(user, res) {
+  res.redirect('/');
+}
+
+function homeRedirect(user, res) {
+  res.redirect('/home');
 }

@@ -1,7 +1,7 @@
 angular.module('ketoboy')
   .factory('JWTService', JWTServiceFactory);
 
-function JWTServiceFactory($cookies) {
+function JWTServiceFactory($cookies, $http) {
   return {
     set: set,
     get: get

@@ -70,3 +70,6 @@ typings/
 
 # ignore code workspace
 ketoboy.code-workspace
+
+# dist
+dist
