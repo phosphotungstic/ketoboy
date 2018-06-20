@@ -1,4 +1,4 @@
-angular.module('ketoboy', ['ngRoute', 'ngCookies']);
+angular.module('ketoboy', ['ngRoute', 'ngCookies', 'chart.js']);
 
 var app = angular.module('ketoboy');
 app.config(function($httpProvider) {

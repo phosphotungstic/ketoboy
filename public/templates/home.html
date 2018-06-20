@@ -1,1 +1,11 @@
-hello
+<div ng-controller="HomeController as $ctrl">
+  <h2>Weekly Calories</h2>
+    <canvas id="bar" class="chart chart-bar" chart-data="$ctrl.calorieData"
+    chart-labels="$ctrl.dailyLabels" chart-options="$ctrl.calorieOptions">
+    </canvas>
+
+  <h2>Weekly Weight Graph</h2>
+  <canvas id="line" class="chart chart-line" chart-data="$ctrl.weightData"
+  chart-labels="$ctrl.dailyLabels" chart-dataset-override="$ctrl.weightOverride">
+  </canvas>
+</div>
