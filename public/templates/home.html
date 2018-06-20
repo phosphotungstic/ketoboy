@@ -1,7 +1,8 @@
 <div ng-controller="HomeController as $ctrl">
   <h2>Weekly Calories</h2>
     <canvas id="bar" class="chart chart-bar" chart-data="$ctrl.calorieData"
-    chart-labels="$ctrl.dailyLabels" chart-options="$ctrl.calorieOptions">
+    chart-labels="$ctrl.dailyLabels" chart-options="$ctrl.calorieOptions" 
+    chart-dataset-override="$ctrl.calorieOverride">
     </canvas>
 
   <h2>Weekly Weight Graph</h2>
