@@ -1,8 +1,18 @@
 angular.module('ketoboy')
   .controller('HomeController', HomeController);
 
-function HomeController($scope) {
+HomeController.$inject = ['$scope', 'RequestService'];
+
+function HomeController($scope, RequestService) {
   var ctrl = this;
+
+  //some test garbage
+  RequestService.getCalories('week', '2018-05-06')
+    .then(function(res) {
+      if(res.data) {
+        console.log(res.data);
+      }
+    });;
   
   ctrl.dailyLabels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   ctrl.calorieData = [

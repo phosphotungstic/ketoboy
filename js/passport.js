@@ -20,10 +20,7 @@ passport.use(new JWTStrategy({
   secretOrKey   : 'oof'
 },
   function (jwtPayload, cb) {
-    var username = jwtPayload['username'];
-    var password = jwtPayload['password'];
-
-    checkUser(username, password, cb);
+    cb(null, jwtPayload);
   }
 ));
 
@@ -35,6 +32,7 @@ var checkUser = function(username, password, cb) {
         .from('user')
         .field('username')
         .field('password')
+        .field('user_id')
         .where("username = '" + username + "'")
         .where("password = '" + password + "'")
         .toString();
