@@ -7,7 +7,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 
 require('./js/passport.js');
-const dbgateway = require('./js/dbgateway.js');
+const calorieService = require('./js/CalorieService.js');
 app.use(passport.initialize());
 
 const sqlite3 = require('sqlite3').verbose();
@@ -40,15 +40,20 @@ function login(req, res, next) {
 }
 
 function test(req, res, next) {
-  res.send('test complete');
+  res.send(req.user);
 }
 
 function getCalories(req, res, next) {
   // url format:
-  // /calories?span=week&date=2018-05-06
-  dbgateway.getCaloriesDb(req.query.span, req.query.date, function(result) {
-    res.send(result);
-  });
+  // /calories?span=week&date=2018-05-06&groupedby=day
+  calorieService.getGroupedCaloriesByDay(req.query.span, req.query.date, req.user.user_id, sendResult(res));
+}
+
+function sendResult(res) {
+  return function(results) {
+    //console.log(results);
+    res.send(results);
+  }
 }
 
 function testCallBack(a, b, c) {

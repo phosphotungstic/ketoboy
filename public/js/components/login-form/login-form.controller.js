@@ -14,7 +14,12 @@ function LoginFormController($http, $window, LoginService) {
       })
       .catch(function(e) {
         console.log(e);
-        ctrl.showError = true;
+        if(e.status == 502) {
+          ctrl.showServerError = true;
+        }
+        else if(e) {
+          ctrl.showError = true;
+        }
       });
   }
 }

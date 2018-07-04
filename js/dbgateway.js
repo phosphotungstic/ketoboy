@@ -6,13 +6,8 @@ module.exports = {
   importTest: importTest
 }
 
-function getCaloriesDb(span, startDate, cb) {
+function getCaloriesDb(startDate, endDate, userId, cb) {
   var db = new sqlite3.Database('./ketoboy.db');
-
-  var start = new Date(startDate);
-  var end = new Date(start.setDate(start.getDate() + getDayLength(span)));
-  var endDate = end.toISOString().substr(0, 10);
-  
 
   db.serialize(function() {  
     let query = 
@@ -20,7 +15,7 @@ function getCaloriesDb(span, startDate, cb) {
         .from('calorie')
         .field('calorie')
         .field('timestamp')
-        .where('user_id = 1')
+        .where('user_id = ' + userId)
         .where('timestamp > "' + startDate + '"')
         .where('timestamp < "' + endDate + '"')
         .toString();

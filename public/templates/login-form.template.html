@@ -4,6 +4,9 @@
   Password: <input type="password" ng-model="user.password"/><br />
   <input type="submit" ng-click="$ctrl.submit(user)"/>
 </form>
+<span ng-if="$ctrl.showServerError">
+  Server down. Please try again later.
+</span>
 <span ng-if="$ctrl.showError">
   Incorrect username/password
 </span>
