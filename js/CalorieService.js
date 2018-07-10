@@ -4,7 +4,8 @@ const moment = require("moment");
 
 module.exports = {
   getCalories: getCalories,
-  getGroupedCaloriesByDay: getGroupedCaloriesByDay
+  getGroupedCaloriesByDay: getGroupedCaloriesByDay,
+  addCalories: addCalories
 }
 
 function getCalories(span, startDate, userId, cb) {
@@ -12,7 +13,7 @@ function getCalories(span, startDate, userId, cb) {
   var end = new Date(start.setDate(start.getDate() + getDayLength(span)));
   var endDate = end.toISOString().substr(0, 10);
 
-  var calories = dbgateway.getCaloriesDb(startDate, endDate, userId, cb);
+  var calories = dbgateway.getCalories(startDate, endDate, userId, cb);
 }
 
 function getGroupedCaloriesByDay(span, startDate, userId, cb) {
@@ -44,4 +45,8 @@ function getDayLength(span) {
     case 'day':
       return 1;
   }
+}
+
+function addCalories(calories, timestamp, userId, cb) {
+  dbgateway.addCalories(calories, timestamp, userId, cb);
 }

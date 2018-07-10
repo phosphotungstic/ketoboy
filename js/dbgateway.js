@@ -2,11 +2,12 @@ const sqlite3 = require('sqlite3').verbose();
 const squel = require('squel');
 
 module.exports = {
-  getCaloriesDb: getCaloriesDb,
-  importTest: importTest
+  getCalories: getCalories,
+  importTest: importTest,
+  addCalories: addCalories
 }
 
-function getCaloriesDb(startDate, endDate, userId, cb) {
+function getCalories(startDate, endDate, userId, cb) {
   var db = new sqlite3.Database('./ketoboy.db');
 
   db.serialize(function() {  
@@ -34,15 +35,27 @@ function getCaloriesDb(startDate, endDate, userId, cb) {
   db.close();
 }
 
-function getDayLength(span) {
-  switch(span) {
-    case 'week':
-      return 7;
-    case 'day':
-      return 1;
-  }
-}
-
 function importTest() {
   console.log('complete');
+}
+
+function addCalories(calories, timestamp, userId, cb) {
+  var db = new sqlite3.Database('./ketoboy.db');
+
+  db.serialize(function() {  
+    let query = 
+      squel.insert()
+      .into("calorie")
+      .set("calorie", calories)
+      .set("timestamp", timestamp)
+      .set("user_id", userId)
+      .toString()
+
+    db.exec(query, function(err) {
+      if(err) res.send('error');
+      return cb('success');
+    })
+  });
+  
+  db.close();
 }

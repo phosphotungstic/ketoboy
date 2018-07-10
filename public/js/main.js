@@ -10,4 +10,4 @@ app.config(function($httpProvider) {
       }
     };
   });
-})
+});
