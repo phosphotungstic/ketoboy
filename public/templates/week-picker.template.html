@@ -1,3 +1,4 @@
 Week of:
 <select ng-model="$ctrl.chosenMonth" ng-change="$ctrl.updateSundays()" ng-options="month for month in $ctrl.months"></select>
-<select ng-model="$ctrl.chosenSunday" ng-options="day for day in $ctrl.sundays"></select>
+<select ng-model="$ctrl.chosenSunday" ng-change="$ctrl.sundayChange()" ng-options="day for day in $ctrl.sundays"></select>
+<button ng-click="$ctrl.submit()">Submit</button>

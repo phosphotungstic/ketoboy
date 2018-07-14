@@ -1,28 +1,42 @@
 angular.module('ketoboy')
   .controller('HomeController', HomeController);
 
-HomeController.$inject = ['$scope', 'RequestService', '_'];
+HomeController.$inject = ['$scope', 'RequestService', '_', 'moment'];
 
-function HomeController($scope, RequestService, _) {
+function HomeController($scope, RequestService, _, moment) {
   var ctrl = this;
 
-  var dates = [];
-  _.each(_.range(6,14), function(date) {
-    if(date < 10) {
-      dates.push('2018-05-0' + date);
-    }
-    else {
-      dates.push('2018-05-' + date);
-    }
-  });
-  console.log(dates)
+  $scope.chosenDate = "";
 
-  //some test garbage
-  RequestService.getCalories('week', '2018-05-06')
+  // var dates = [];
+  // _.each(_.range(6,14), function(date) {
+  //   if(date < 10) {
+  //     dates.push('2018-05-0' + date);
+  //   }
+  //   else {
+  //     dates.push('2018-05-' + date);
+  //   }
+  // });
+  // console.log(dates)
+
+  function generateDates(beginningDate) {
+    var first = moment(beginningDate);
+
+    var dates = [];
+    _.each(_.range(0,6), function(addDay) {
+      dates.push(first.clone().add(addDay, 'days').format("YYYY-MM-DD"));
+    });
+    return dates;
+  }
+
+  $scope.$watch('chosenDate', function(newValue) {
+    if(newValue == "") return;
+    RequestService.getCalories('week', newValue)
     .then(function(res) {
       console.log(res.data)
       if(res.data) {
         ctrl.personalCalorieData = [];
+        dates = generateDates(newValue);
         _.each(dates, function(date) {
           if(res.data[date]) {
             ctrl.personalCalorieData.push(res.data[date]);
@@ -37,11 +51,11 @@ function HomeController($scope, RequestService, _) {
         console.log(ctrl.calorieData)
       }
     });;
+  });
+  //some test garbage
+
   
   ctrl.dailyLabels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  // ctrl.calorieData = [
-  //   [65, 59, 200, 81, 56, 55, 40],
-  //   [1000, 1000, 1000, 1000, 1000, 1000, 100]];
   ctrl.weightData = [265, 259, 280, 281, 256, 255, 240];
 
   ctrl.calorieOptions = 
