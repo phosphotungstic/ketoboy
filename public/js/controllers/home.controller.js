@@ -1,61 +1,41 @@
 angular.module('ketoboy')
   .controller('HomeController', HomeController);
 
-HomeController.$inject = ['$scope', 'RequestService', '_', 'moment'];
+HomeController.$inject = ['$scope', 'RequestService', '_', 'moment', 'TimeService'];
 
-function HomeController($scope, RequestService, _, moment) {
+function HomeController($scope, RequestService, _, moment, TimeService) {
   var ctrl = this;
 
-  $scope.chosenDate = "";
-
-  // var dates = [];
-  // _.each(_.range(6,14), function(date) {
-  //   if(date < 10) {
-  //     dates.push('2018-05-0' + date);
-  //   }
-  //   else {
-  //     dates.push('2018-05-' + date);
-  //   }
-  // });
-  // console.log(dates)
-
-  function generateDates(beginningDate) {
-    var first = moment(beginningDate);
-
-    var dates = [];
-    _.each(_.range(0,6), function(addDay) {
-      dates.push(first.clone().add(addDay, 'days').format("YYYY-MM-DD"));
-    });
-    return dates;
-  }
-
-  $scope.$watch('chosenDate', function(newValue) {
-    if(newValue == "") return;
-    RequestService.getCalories('week', newValue)
+  ctrl.updateGraph = function(date) {
+    if(date == "") return;
+    ctrl.beginningDate = date;
+    RequestService.getCalories('week', date)
     .then(function(res) {
       console.log(res.data)
       if(res.data) {
-        ctrl.personalCalorieData = [];
-        dates = generateDates(newValue);
-        _.each(dates, function(date) {
-          if(res.data[date]) {
-            ctrl.personalCalorieData.push(res.data[date]);
-          }
-          else {
-            ctrl.personalCalorieData.push(0);
-          }
-        });
+        ctrl.personalCalorieData = getPersonalCalorieData(res.data);
         ctrl.calorieData = [];
         ctrl.calorieData.push(ctrl.personalCalorieData);
         ctrl.calorieData.push([1000, 1000, 1000, 1000, 1000, 1000, 1000]);
-        console.log(ctrl.calorieData)
       }
-    });;
-  });
-  //some test garbage
+    });
+  };
 
+  function getPersonalCalorieData(data) {
+    var personalCalorieData = [];
+    dates = TimeService.generateDates(ctrl.beginningDate);
+    _.each(dates, function(date) {
+      if(data[date]) {
+        personalCalorieData.push(data[date]);
+      }
+      else {
+        personalCalorieData.push(0);
+      }
+    });
+    return personalCalorieData;
+  }
   
-  ctrl.dailyLabels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  ctrl.dailyLabels = moment.weekdays();
   ctrl.weightData = [265, 259, 280, 281, 256, 255, 240];
 
   ctrl.calorieOptions = 

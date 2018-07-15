@@ -1,8 +1,8 @@
 angular.module('ketoboy')
   .component('weekPicker', {
-    templateUrl: '/templates/week-picker.template.html',
+    templateUrl: '/js/components/week-picker/week-picker.template.html',
     controller: 'WeekPickerController',
     bindings: {
-      chosenDate: "="
+      updateGraph: "<"
     }
   });

@@ -1,5 +1,5 @@
 angular.module('ketoboy')
   .component('loginForm', {
-    templateUrl: '/templates/login-form.template.html',
+    templateUrl: '/js/components/login-form/login-form.template.html',
     controller: 'LoginFormController'
   });
