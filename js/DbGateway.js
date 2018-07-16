@@ -4,7 +4,8 @@ const squel = require('squel');
 module.exports = {
   getCalories: getCalories,
   importTest: importTest,
-  addCalories: addCalories
+  addCalories: addCalories,
+  getSettings: getSettings
 }
 
 function getCalories(startDate, endDate, userId, cb) {
@@ -55,6 +56,31 @@ function addCalories(calories, timestamp, userId, cb) {
       if(err) res.send('error');
       return cb('success');
     })
+  });
+  
+  db.close();
+}
+
+function getSettings(userId, cb) {
+  var db = new sqlite3.Database('./ketoboy.db');
+
+  db.serialize(function() {
+    let query = 
+      squel.select()
+        .from('max_calorie')
+        .field('max_calorie')
+        .where('user_id = ' + userId)
+        .toString();
+
+    db.get(query, function(err, row) {
+        if(err) res.send('error');
+        if(row == undefined) {
+          return cb(false);
+        }
+        else {
+          return cb(row);
+        }
+    });
   });
   
   db.close();
