@@ -16,7 +16,17 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
         ctrl.personalCalorieData = getPersonalCalorieData(res.data);
         ctrl.calorieData = [];
         ctrl.calorieData.push(ctrl.personalCalorieData);
-        ctrl.calorieData.push([1000, 1000, 1000, 1000, 1000, 1000, 1000]);
+        RequestService.getMaxCalories()
+          .then(function(res) {
+            var maxCalories = [];
+            _.each(_.range(0, 6), function() {
+              maxCalories.push(res.data.max_calorie);
+            });
+            ctrl.calorieData.push(maxCalories);
+          })
+          .catch(function(e) {
+            console.log(e);
+          });
       }
     });
   };

@@ -5,7 +5,8 @@ module.exports = {
   getCalories: getCalories,
   importTest: importTest,
   addCalories: addCalories,
-  getMaxCalories: getMaxCalories
+  getMaxCalories: getMaxCalories,
+  updateMaxCalories: updateMaxCalories
 }
 
 function getCalories(startDate, endDate, userId, cb) {
@@ -81,6 +82,26 @@ function getMaxCalories(userId, cb) {
           return cb(row);
         }
     });
+  });
+  
+  db.close();
+}
+
+function updateMaxCalories(calories, userId, cb) {
+  var db = new sqlite3.Database('./ketoboy.db');
+
+  db.serialize(function() {  
+    let query = 
+      squel.update()
+      .table("max_calorie")
+      .set("max_calorie", calories)
+      .where("user_id = " + userId)
+      .toString()
+
+    db.exec(query, function(err) {
+      if(err) res.send('error');
+      return cb('success');
+    })
   });
   
   db.close();
