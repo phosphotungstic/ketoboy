@@ -5,7 +5,7 @@ module.exports = {
   getCalories: getCalories,
   importTest: importTest,
   addCalories: addCalories,
-  getSettings: getSettings
+  getMaxCalories: getMaxCalories
 }
 
 function getCalories(startDate, endDate, userId, cb) {
@@ -61,7 +61,7 @@ function addCalories(calories, timestamp, userId, cb) {
   db.close();
 }
 
-function getSettings(userId, cb) {
+function getMaxCalories(userId, cb) {
   var db = new sqlite3.Database('./ketoboy.db');
 
   db.serialize(function() {

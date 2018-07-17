@@ -23,7 +23,7 @@ app.get('/test', passport.authenticate('jwt', {session: false}), test);
 app.post('/login', login);
 app.get('/calories', passport.authenticate('jwt', {session: false}), getCalories);
 app.post('/calories', passport.authenticate('jwt', {session: false}), addCalories); 
-app.get('/settings', passport.authenticate('jwt', {session: false}), getSettings);
+app.get('/maxCalories', passport.authenticate('jwt', {session: false}), getMaxCalories);
 
 app.listen(3000, () => console.log('Example app listening on port 3000'));
 
@@ -57,8 +57,8 @@ function addCalories(req, res, next) {
   calorieService.addCalories(req.body.calories, req.body.timestamp, req.user.user_id, sendResult(res));
 }
 
-function getSettings(req, res, next) {
-  calorieService.getSettings(req.user.user_id, sendResult(res));
+function getMaxCalories(req, res, next) {
+  calorieService.getMaxCalories(req.user.user_id, sendResult(res));
 }
 
 function sendResult(res) {

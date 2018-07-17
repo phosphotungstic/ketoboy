@@ -6,7 +6,7 @@ module.exports = {
   getCalories: getCalories,
   getGroupedCaloriesByDay: getGroupedCaloriesByDay,
   addCalories: addCalories,
-  getSettings: getSettings
+  getMaxCalories: getMaxCalories
 }
 
 function getCalories(span, startDate, userId, cb) {
@@ -51,6 +51,6 @@ function addCalories(calories, timestamp, userId, cb) {
   dbgateway.addCalories(calories, timestamp, userId, cb);
 }
 
-function getSettings(userId, cb) {
-  dbgateway.getSettings(userId, cb);
+function getMaxCalories(userId, cb) {
+  dbgateway.getMaxCalories(userId, cb);
 }
