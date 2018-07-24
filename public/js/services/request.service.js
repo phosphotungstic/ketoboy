@@ -18,10 +18,11 @@ function RequestService($http) {
   }
 
   function addCalories(calories, timestamp) {
-    return $http.post('/calories', {
+    var data = {
       calories: calories,
       timestamp: timestamp
-    });
+    };
+    return $http.post('/calories', data);
   }
 
   function getMaxCalories() {
