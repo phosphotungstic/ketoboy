@@ -22,6 +22,7 @@ function LoginService($http, JWTService) {
   }
 
   function isLoggedIn() {
-    return JWTService.get();
+    var date = new Date();
+    return date.getTime() < JWTService.getExpiration();
   }
 }

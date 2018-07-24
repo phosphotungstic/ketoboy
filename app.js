@@ -35,7 +35,7 @@ function login(req, res, next) {
       return res.status(401).json({ status: 'error', code: 'unauthorized' });
     } else {
       var token = jwt.sign(user, 'oof', {
-        expiresIn: 10080 // in seconds
+        expiresIn: 86400 // 1d
       });
       return res.json({ token: token });
     }
