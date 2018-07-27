@@ -6,7 +6,8 @@ angular.module('ketoboy')
 function LoginService($http, JWTService) {
   return {
     login: login,
-    isLoggedIn: isLoggedIn
+    isLoggedIn: isLoggedIn,
+    logout: logout
   }
   
   function login(user) {
@@ -22,7 +23,15 @@ function LoginService($http, JWTService) {
   }
 
   function isLoggedIn() {
+    if(JWTService.get() == null) {
+      return false;
+    }
+
     var date = new Date();
     return date.getTime() < JWTService.getExpiration();
+  }
+
+  function logout() {
+    JWTService.remove();
   }
 }

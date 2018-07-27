@@ -1,3 +1,8 @@
-Max calories:
-<input type="text" ng-model="$ctrl.currentMax"></input>
-<button ng-click="$ctrl.submit()">Update Settings</button>
+<h2>Settings</h2>
+<div class="ui right labeled input">
+    <input type="text" ng-model="$ctrl.currentMax" placeholder="Enter Max Calories"></input>
+    <div class="ui basic label">kcal</div>
+  </div>
+<br>
+<br>
+<button ng-click="$ctrl.submit()" class="ui primary button">Save</button>

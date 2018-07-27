@@ -11,7 +11,7 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
     ctrl.beginningDate = date;
     RequestService.getCalories('week', date)
     .then(function(res) {
-      console.log(res.data)
+      //console.log(res.data)
       if(res.data) {
         ctrl.personalCalorieData = getPersonalCalorieData(res.data);
         ctrl.calorieData = [];
@@ -19,9 +19,10 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
         RequestService.getMaxCalories()
           .then(function(res) {
             var maxCalories = [];
-            _.each(_.range(0, 6), function() {
+            _.each(_.range(0, 7), function() {
               maxCalories.push(res.data.max_calorie);
             });
+            //console.log(maxCalories);
             ctrl.calorieData.push(maxCalories);
           })
           .catch(function(e) {
@@ -67,14 +68,18 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
   [{
     label: "Calories",
     borderWidth: 1,
+    backgroundColor: "rgba(255,99,132,0.4)",
+    borderColor: "rgba(255,99,132,1)",
+    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+    hoverBorderColor: "rgba(255,99,132,1)",
     type: 'bar',
   },
   {
     label: "Max Calorie Limit",
-        borderWidth: 3,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        type: 'line'
+    borderWidth: 3,
+    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+    hoverBorderColor: "rgba(255,99,132,1)",
+    type: 'line'
   }];
 
   ctrl.weightOverride = 

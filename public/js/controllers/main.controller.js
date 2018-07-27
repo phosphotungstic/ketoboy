@@ -15,4 +15,8 @@ function MainController($window, LoginService) {
   ctrl.isLoggedIn = function() {
     return LoginService.isLoggedIn();
   }
+
+  ctrl.logout = function() {
+    LoginService.logout();
+  }
 }

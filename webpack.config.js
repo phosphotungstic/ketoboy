@@ -6,7 +6,8 @@ module.exports = {
           './node_modules/angular-chart.js/dist/angular-chart.min.js',
           './node_modules/moment/moment.js',
           './node_modules/angular-moment/angular-moment.min.js',
-          './node_modules/underscore/underscore.js'
+          './node_modules/underscore/underscore.js',
+          './node_modules/jquery/dist/jquery.min.js'
         ],
   output: {
     filename: './bundle.js'

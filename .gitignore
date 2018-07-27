@@ -71,5 +71,8 @@ typings/
 # ignore code workspace
 ketoboy.code-workspace
 
+# ignore actual semantic junk
+semantic/dist
+
 # dist
 dist

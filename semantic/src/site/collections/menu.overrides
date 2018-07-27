@@ -1,0 +1,10 @@
+/*******************************
+         Site Overrides
+*******************************/
+.ui.menu {
+  background: #a8230b;
+}
+
+.ui.menu .item {
+  color: #eebf77;
+}
