@@ -1,3 +1,5 @@
+import './week-picker.controller';
+
 angular.module('ketoboy')
   .component('weekPicker', {
     templateUrl: '/js/components/week-picker/week-picker.template.html',

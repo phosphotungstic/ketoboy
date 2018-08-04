@@ -1,3 +1,6 @@
+#ignore idea
+.idea/
+
 #ignore key stuff
 *.key
 *.key.pub
