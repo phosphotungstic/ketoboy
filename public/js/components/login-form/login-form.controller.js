@@ -4,7 +4,7 @@ angular.module('ketoboy')
 LoginFormController.$inject = ['$http', '$window', 'LoginService'];
 
 function LoginFormController($http, $window, LoginService) {
-  var ctrl = this;
+  let ctrl = this;
   ctrl.showError = false;
 
   ctrl.submit = function(user) {
@@ -21,5 +21,5 @@ function LoginFormController($http, $window, LoginService) {
           ctrl.showError = true;
         }
       });
-  }
+  };
 }

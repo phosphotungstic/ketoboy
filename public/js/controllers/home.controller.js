@@ -4,7 +4,7 @@ angular.module('ketoboy')
 HomeController.$inject = ['$scope', 'RequestService', '_', 'moment', 'TimeService'];
 
 function HomeController($scope, RequestService, _, moment, TimeService) {
-  var ctrl = this;
+  let ctrl = this;
 
   ctrl.updateGraph = function(date) {
     if(date == "") return;
@@ -18,7 +18,7 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
         ctrl.calorieData.push(ctrl.personalCalorieData);
         RequestService.getMaxCalories()
           .then(function(res) {
-            var maxCalories = [];
+            let maxCalories = [];
             _.each(_.range(0, 7), function() {
               maxCalories.push(res.data.max_calorie);
             });
@@ -33,8 +33,8 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
   };
 
   function getPersonalCalorieData(data) {
-    var personalCalorieData = [];
-    dates = TimeService.generateDates(ctrl.beginningDate);
+    let personalCalorieData = [];
+    let dates = TimeService.generateDates(ctrl.beginningDate);
     _.each(dates, function(date) {
       if(data[date]) {
         personalCalorieData.push(data[date]);

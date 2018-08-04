@@ -9,16 +9,16 @@ function RequestService($http) {
     addCalories: addCalories,
     getMaxCalories: getMaxCalories,
     updateMaxCalories: updateMaxCalories
-  }
+  };
   
   function getCalories(span, date) {
-    var headers = new Headers();
+    let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return $http.get('/calories?span=' + span + '&date=' + date, {headers: headers});
   }
 
   function addCalories(calories, timestamp) {
-    var data = {
+    let data = {
       calories: calories,
       timestamp: timestamp
     };

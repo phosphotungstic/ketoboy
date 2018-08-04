@@ -6,7 +6,8 @@ module.exports =
                 filename: './bundle.js'
             },
             performance: { hints: false },
-            mode: 'none'
+            mode: 'none',
+            devtool: 'eval-source-map',
         },
         {
             entry: './public/js/sourcing.js',
@@ -14,6 +15,7 @@ module.exports =
                 filename:'./source.js'
             },
             performance: { hints: false },
-            mode: 'none'
+            mode: 'none',
+            devtool: 'eval-source-map',
         }
     ];

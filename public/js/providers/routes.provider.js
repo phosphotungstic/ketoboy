@@ -1,4 +1,4 @@
-var app = angular.module('ketoboy');
+let app = angular.module('ketoboy');
 
 app.config(function($routeProvider) {
   $routeProvider

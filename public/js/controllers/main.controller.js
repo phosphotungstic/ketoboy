@@ -4,19 +4,19 @@ angular.module('ketoboy')
   MainController.$inject = ['$window', 'LoginService'];
 
 function MainController($window, LoginService) {
-  var ctrl = this;
+  let ctrl = this;
   
   ctrl.$onInit = function() {
     if(LoginService.isLoggedIn()) {
       $window.location.href = '#!/home';
     }
-  }
+  };
 
   ctrl.isLoggedIn = function() {
     return LoginService.isLoggedIn();
-  }
+  };
 
   ctrl.logout = function() {
     LoginService.logout();
-  }
+  };
 }

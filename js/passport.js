@@ -4,16 +4,15 @@ const sqlite3 = require('sqlite3').verbose();
 const squel = require("squel");
 const passportJWT = require("passport-jwt");
 const JWTStrategy   = passportJWT.Strategy;
-const ExtractJWT = require('passport-jwt').ExtractJwt;
 
 
 passport.use(new LocalStrategy(function(username, password, cb) {
   checkUser(username, password, cb);
 }));
 
-var cookieExtractor = function(req) {
+let cookieExtractor = function(req) {
   return req.cookies['jwt'];
-}
+};
 
 passport.use(new JWTStrategy({
   jwtFromRequest: cookieExtractor,
@@ -24,8 +23,8 @@ passport.use(new JWTStrategy({
   }
 ));
 
-var checkUser = function(username, password, cb) {
-  var db = new sqlite3.Database('./ketoboy.db');
+let checkUser = function(username, password, cb) {
+  let db = new sqlite3.Database('./ketoboy.db');
   db.serialize(function() {  
     let query = 
       squel.select()
@@ -49,4 +48,4 @@ var checkUser = function(username, password, cb) {
   });
   
   db.close();
-}
+};

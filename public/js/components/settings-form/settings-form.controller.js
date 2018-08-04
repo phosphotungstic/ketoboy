@@ -4,7 +4,7 @@ angular.module('ketoboy')
   SettingsFormController.$inject = ['RequestService'];
 
 function SettingsFormController(RequestService) {
-  var ctrl = this;
+  let ctrl = this;
   RequestService.getMaxCalories()
     .then(function(res) {
       ctrl.currentMax = res.data.max_calorie;
@@ -22,5 +22,5 @@ function SettingsFormController(RequestService) {
       .catch(function(e) {
         console.log(e);
       });
-  }
+  };
 } 

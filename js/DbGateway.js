@@ -7,10 +7,10 @@ module.exports = {
   addCalories: addCalories,
   getMaxCalories: getMaxCalories,
   updateMaxCalories: updateMaxCalories
-}
+};
 
 function getCalories(startDate, endDate, userId, cb) {
-  var db = new sqlite3.Database('./ketoboy.db');
+  let db = new sqlite3.Database('./ketoboy.db');
 
   db.serialize(function() {  
     let query = 
@@ -42,7 +42,7 @@ function importTest() {
 }
 
 function addCalories(calories, timestamp, userId, cb) {
-  var db = new sqlite3.Database('./ketoboy.db');
+  let db = new sqlite3.Database('./ketoboy.db');
 
   db.serialize(function() {  
     let query = 
@@ -63,7 +63,7 @@ function addCalories(calories, timestamp, userId, cb) {
 }
 
 function getMaxCalories(userId, cb) {
-  var db = new sqlite3.Database('./ketoboy.db');
+  let db = new sqlite3.Database('./ketoboy.db');
 
   db.serialize(function() {
     let query = 
@@ -88,7 +88,7 @@ function getMaxCalories(userId, cb) {
 }
 
 function updateMaxCalories(calories, userId, cb) {
-  var db = new sqlite3.Database('./ketoboy.db');
+  let db = new sqlite3.Database('./ketoboy.db');
 
   db.serialize(function() {  
     let query = 

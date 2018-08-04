@@ -1,6 +1,5 @@
 const dbgateway = require("./DbGateway.js");
 const _ = require("underscore");
-const moment = require("moment");
 
 module.exports = {
   getCalories: getCalories,
@@ -11,9 +10,9 @@ module.exports = {
 }
 
 function getCalories(span, startDate, userId, cb) {
-  var start = new Date(startDate);
-  var end = new Date(start.setDate(start.getDate() + getDayLength(span)));
-  var endDate = end.toISOString().substr(0, 10);
+  let start = new Date(startDate);
+  let end = new Date(start.setDate(start.getDate() + getDayLength(span)));
+  let endDate = end.toISOString().substr(0, 10);
   dbgateway.getCalories(startDate, endDate, userId, cb);
 }
 
@@ -25,8 +24,8 @@ function sumCaloriesByDay(cb) {
   return function(rows) {
     this.calorieSums = {};
     _.each(rows, function(row) {
-      var calorieDate = new Date(row.timestamp);
-      var calorieDateString = calorieDate.toISOString().substr(0, 10);
+      let calorieDate = new Date(row.timestamp);
+      let calorieDateString = calorieDate.toISOString().substr(0, 10);
       if(calorieDateString in this.calorieSums) {
         this.calorieSums[calorieDateString] += row.calorie
       }

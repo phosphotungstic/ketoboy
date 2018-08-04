@@ -11,7 +11,7 @@ function LoginService($http, JWTService) {
   }
   
   function login(user) {
-    var headers = new Headers();
+    let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return $http.post('/login', user, {headers: headers})
       .then(function(res) {
@@ -27,7 +27,7 @@ function LoginService($http, JWTService) {
       return false;
     }
 
-    var date = new Date();
+    let date = new Date();
     return date.getTime() < JWTService.getExpiration();
   }
 
