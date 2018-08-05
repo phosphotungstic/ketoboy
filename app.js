@@ -55,7 +55,7 @@ function getCalories(req, res) {
 function addCalories(req, res) {
   console.log(req.body);
   console.log(req.user);
-  calorieService.addCalories(req.body.calories, req.body.timestamp, req.user.user_id, sendResult(res));
+  calorieService.addCalories(req.body.calories, req.body.timestamp, req.body.note, req.user.user_id, sendResult(res));
 }
 
 function getMaxCalories(req, res) {

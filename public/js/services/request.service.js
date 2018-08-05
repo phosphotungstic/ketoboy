@@ -17,10 +17,11 @@ function RequestService($http) {
     return $http.get('/calories?span=' + span + '&date=' + date, {headers: headers});
   }
 
-  function addCalories(calories, timestamp) {
+  function addCalories(calories, timestamp, note) {
     let data = {
       calories: calories,
-      timestamp: timestamp
+      timestamp: timestamp,
+      note: note
     };
     return $http.post('/calories', data);
   }

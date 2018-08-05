@@ -22,4 +22,12 @@ function LoginFormController($http, $window, LoginService) {
         }
       });
   };
+
+  ctrl.hideServerError = function() {
+    ctrl.showServerError = false;
+  };
+
+  ctrl.hideError = function() {
+    ctrl.showError = false;
+  };
 }

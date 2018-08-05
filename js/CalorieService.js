@@ -7,7 +7,7 @@ module.exports = {
   addCalories: addCalories,
   getMaxCalories: getMaxCalories,
   updateMaxCalories: updateMaxCalories
-}
+};
 
 function getCalories(span, startDate, userId, cb) {
   let start = new Date(startDate);
@@ -47,8 +47,8 @@ function getDayLength(span) {
   }
 }
 
-function addCalories(calories, timestamp, userId, cb) {
-  dbgateway.addCalories(calories, timestamp, userId, cb);
+function addCalories(calories, timestamp, note, userId, cb) {
+  dbgateway.addCalories(calories, timestamp, note, userId, cb);
 }
 
 function getMaxCalories(userId, cb) {

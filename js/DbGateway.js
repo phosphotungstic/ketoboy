@@ -41,8 +41,9 @@ function importTest() {
   console.log('complete');
 }
 
-function addCalories(calories, timestamp, userId, cb) {
+function addCalories(calories, timestamp, note, userId, cb) {
   let db = new sqlite3.Database('./ketoboy.db');
+  note = note ? note : null;
 
   db.serialize(function() {  
     let query = 
@@ -51,7 +52,8 @@ function addCalories(calories, timestamp, userId, cb) {
       .set("calorie", calories)
       .set("timestamp", timestamp)
       .set("user_id", userId)
-      .toString()
+      .set("note", note)
+      .toString();
 
     db.exec(query, function(err) {
       if(err) res.send('error');
@@ -96,7 +98,7 @@ function updateMaxCalories(calories, userId, cb) {
       .table("max_calorie")
       .set("max_calorie", calories)
       .where("user_id = " + userId)
-      .toString()
+      .toString();
 
     db.exec(query, function(err) {
       if(err) res.send('error');

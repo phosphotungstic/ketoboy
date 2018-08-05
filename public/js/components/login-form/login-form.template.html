@@ -22,9 +22,19 @@
     <input type="submit" class="ui fluid large submit button" ng-click="$ctrl.submit(user)"/>
   </div>
 </form>
-<span ng-if="$ctrl.showServerError">
-  Server down. Please try again later.
-</span>
-<span ng-if="$ctrl.showError">
-  Incorrect username/password
-</span>
+
+<div class="ui error message" ng-if="$ctrl.showServerError">
+  <i class="close icon" ng-click="$ctrl.hideServerError()"></i>
+  <div class="header">
+    Server is down x__x.
+  </div>
+  Please try again later.
+</div>
+
+<div class="ui error message" ng-if="$ctrl.showError">
+  <i class="close icon" ng-click="$ctrl.hideError()"></i>
+  <div class="header">
+    Incorrect username/password.
+  </div>
+  Please try again.
+</div>

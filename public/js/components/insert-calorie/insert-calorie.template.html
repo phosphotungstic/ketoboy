@@ -1,14 +1,31 @@
 <br>
-<div class="ui right labeled input">
-  <input type="text" ng-model="$ctrl.calories" placeholder="Enter Calories"></input>
-  <div class="ui basic label">kcal</div>
+<form>
+  <div class="ui right labeled input">
+    <input type="text" ng-model="$ctrl.calories" placeholder="Enter Calories">
+    <div class="ui basic label">kcal</div>
+  </div>
+  <br>
+  <br>
+  <div class="ui input">
+    <input type="date" ng-model="$ctrl.dateInput">
+  </div>
+  <div class="ui input">
+    <input type="time" ng-model="$ctrl.timeInput">
+  </div>
+  <br>
+  <br>
+  <div class="ui input">
+    <input type="text" ng-model="$ctrl.noteInput" placeholder="Note">
+  </div>
+  <br>
+  <br>
+  <button ng-click="$ctrl.submit()" class="ui primary button">Submit</button>
+</form>
+
+<div class="ui error message" ng-if="$ctrl.showError">
+  <i class="close icon" ng-click="$ctrl.hideError()"></i>
+  <div class="header">
+    Calorie input required.
+  </div>
+  Please try again.
 </div>
-<br>
-<br>
-<div class="ui input">
-  <input type="date" ng-model="$ctrl.dateInput"></input>
-</div>
-<div class="ui input">
-  <input type="time" ng-model="$ctrl.timeInput"></input>
-</div>
-<button ng-click="$ctrl.submit()" class="ui primary button">Submit</button>

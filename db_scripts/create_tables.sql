@@ -12,6 +12,7 @@ create table if not exists calorie(
   calorie_id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   calorie INTEGER NOT NULL,
+  note CHAR(50),
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
