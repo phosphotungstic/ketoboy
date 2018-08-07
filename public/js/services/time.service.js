@@ -5,6 +5,11 @@ TimeService.$inject = ['moment', '_'];
 
 function TimeService(moment, _) {
   return {
+    getMonths: getMonths,
+    getDates: getDates,
+    getCurrentMonth: getCurrentMonth,
+    getCurrentDate: getCurrentDate,
+    getMonthForBeginningOfWeek: getMonthForBeginningOfWeek,
     getSundays: getSundays,
     generateDates: generateDates,
   };
@@ -32,6 +37,30 @@ function TimeService(moment, _) {
       dates.push(first.clone().add(addDay, 'days').format("YYYY-MM-DD"));
     });
     return dates;
+  }
+
+  function getMonths() {
+    return moment().localeData().months();
+  }
+
+  function getDates(month, year) {
+    let maxDate = 31;
+    while(moment([year, month, maxDate].join('-')).isValid() === false) {
+      maxDate--;
+    }
+    return _.range(1, maxDate);
+  }
+
+  function getCurrentDate() {
+    return moment().date();
+  }
+
+  function getMonthForBeginningOfWeek() {
+    return getMonths()[moment().weekday(0).month()]
+  }
+
+  function getCurrentMonth() {
+    return getMonths()[moment().month()];
   }
 
 }

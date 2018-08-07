@@ -8,6 +8,9 @@ app.config(function($routeProvider) {
   .when("/insert", {
     templateUrl : "/templates/insert.html"
   })
+  .when("/indepth", {
+    templateUrl: "/templates/indepth.html"
+  })
   .when("/settings", {
     templateUrl: "/templates/settings.html"
   });

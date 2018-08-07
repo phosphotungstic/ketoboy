@@ -8,6 +8,7 @@ import './components/insert-calorie/insert-calorie.component';
 import './components/login-form/login-form.component';
 import './components/settings-form/settings-form.component';
 import './components/week-picker/week-picker.component';
+import './components/date-picker/date-picker.component';
 
 import './directives/date-input.directive';
 import './directives/time-input.directive';

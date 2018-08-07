@@ -5,8 +5,8 @@ angular.module('ketoboy')
 
 function WeekPickerController($http, $window, moment, _, TimeService) {
   let ctrl = this;
-  ctrl.months = moment().localeData().months();
-  ctrl.chosenMonth = ctrl.months[moment().weekday(0).month()];
+  ctrl.months = TimeService.getMonths();
+  ctrl.chosenMonth = TimeService.getMonthForBeginningOfWeek();
 
   ctrl.updateSundays = function() {
     ctrl.chosenMonthNumber = moment().month(ctrl.chosenMonth).month();

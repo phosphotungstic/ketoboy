@@ -1,0 +1,10 @@
+<div class="ui container">
+  <div class="ui grid">
+    <div class="ui big label">Date:</div>
+    <select class="ui dropdown" ng-model="$ctrl.chosenMonth" ng-change="$ctrl.updateDates()" ng-options="month for month in $ctrl.months"></select>
+    &nbsp;
+    <select class="ui dropdown" ng-model="$ctrl.chosenDate" ng-options="day for day in $ctrl.dates"></select>
+    &nbsp;
+    <button ng-click="$ctrl.submit()" class="ui primary button">Update</button>
+  </div>
+</div>
