@@ -45,10 +45,17 @@ function TimeService(moment, _) {
 
   function getDates(month, year) {
     let maxDate = 31;
-    while(moment([year, month, maxDate].join('-')).isValid() === false) {
+    while(moment(toString(month, maxDate, year)).isValid() === false) {
       maxDate--;
     }
-    return _.range(1, maxDate);
+    return _.range(1, maxDate+1);
+  }
+
+  function toString(month, date, year) {
+    if(month < 10) {
+      month = "0" + month;
+    }
+    return [year, month, date].join("-");
   }
 
   function getCurrentDate() {

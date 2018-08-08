@@ -16,7 +16,7 @@ function InsertCalorieController($http, $window, RequestService, moment) {
       return;
     }
     let date = moment(ctrl.dateInput).format('YYYY-MM-DD');
-    let time = moment(ctrl.timeInput).format('hh:mm:00');
+    let time = moment(ctrl.timeInput).format('HH:mm:00');
 
     let fullTimestamp = date + " " + time;
 
@@ -27,6 +27,7 @@ function InsertCalorieController($http, $window, RequestService, moment) {
         ctrl.noteInput =  "";
       })
       .catch(function(e) {
+        ctrl.hideError();
         console.log(e);
       });
   };

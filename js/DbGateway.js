@@ -4,6 +4,7 @@ const squel = require('squel');
 module.exports = {
   getCalories: getCalories,
   importTest: importTest,
+  getDetailedCalorieInfo: getDetailedCalorieInfo,
   addCalories: addCalories,
   getMaxCalories: getMaxCalories,
   updateMaxCalories: updateMaxCalories
@@ -21,10 +22,11 @@ function getCalories(startDate, endDate, userId, cb) {
         .where('user_id = ' + userId)
         .where('timestamp > "' + startDate + '"')
         .where('timestamp < "' + endDate + '"')
+        .order("timestamp")
         .toString();
 
     db.all(query, function(err, rows) {
-        if(err) res.send('error');
+        if(err) cb('error');
         if(rows == undefined) {
           return cb(false);
         }
@@ -35,6 +37,33 @@ function getCalories(startDate, endDate, userId, cb) {
   });
   
   db.close();
+}
+
+function getDetailedCalorieInfo(chosenDate, userId, cb) {
+  let db = new sqlite3.Database('./ketoboy.db');
+
+  db.serialize(function() {
+    let query =
+      squel.select()
+        .from('calorie')
+        .field('calorie')
+        .field('note')
+        .field('timestamp')
+        .where('user_id = ' + userId)
+        .where('timestamp >= "' + chosenDate + ' 00:00:00"')
+        .where('timestamp <= "' + chosenDate + ' 23:59:59"')
+        .toString();
+
+    db.all(query, function(err, rows) {
+      if(err) cb('error');
+      if(rows == undefined) {
+        return cb(false);
+      }
+      else {
+        return cb(rows);
+      }
+    });
+  });
 }
 
 function importTest() {
@@ -56,7 +85,7 @@ function addCalories(calories, timestamp, note, userId, cb) {
       .toString();
 
     db.exec(query, function(err) {
-      if(err) res.send('error');
+      if(err) cb('error');
       return cb('success');
     })
   });
@@ -76,7 +105,7 @@ function getMaxCalories(userId, cb) {
         .toString();
 
     db.get(query, function(err, row) {
-        if(err) res.send('error');
+        if(err) cb('error');
         if(row == undefined) {
           return cb(false);
         }
@@ -101,7 +130,7 @@ function updateMaxCalories(calories, userId, cb) {
       .toString();
 
     db.exec(query, function(err) {
-      if(err) res.send('error');
+      if(err) cb('error');
       return cb('success');
     })
   });

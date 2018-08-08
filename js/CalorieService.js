@@ -4,6 +4,7 @@ const _ = require("underscore");
 module.exports = {
   getCalories: getCalories,
   getGroupedCaloriesByDay: getGroupedCaloriesByDay,
+  getDetailedCalorieInfo: getDetailedCalorieInfo,
   addCalories: addCalories,
   getMaxCalories: getMaxCalories,
   updateMaxCalories: updateMaxCalories
@@ -18,6 +19,11 @@ function getCalories(span, startDate, userId, cb) {
 
 function getGroupedCaloriesByDay(span, startDate, userId, cb) {
   getCalories(span, startDate, userId, sumCaloriesByDay(cb));
+}
+
+function getDetailedCalorieInfo(chosenDate, userId, cb) {
+  let date = new Date(chosenDate);
+  dbgateway.getDetailedCalorieInfo(date, userId, cb);
 }
 
 function sumCaloriesByDay(cb) {
