@@ -1,7 +1,10 @@
-#ignore idea
+# ignore my real nginx.conf
+nginx.conf
+
+# ignore idea
 .idea/
 
-#ignore key stuff
+# ignore key stuff
 *.key
 *.key.pub
 app-env
