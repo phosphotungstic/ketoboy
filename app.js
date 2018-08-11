@@ -18,6 +18,7 @@ app.use(cookieParser());
 app.get('/test', passport.authenticate('jwt', {session: false}), test);
 app.post('/login', login);
 app.get('/calories', passport.authenticate('jwt', {session: false}), getCalories);
+app.delete('/calories', passport.authenticate('jwt', {session: false}), deleteCalories);
 app.get('/detailedCalories', passport.authenticate('jwt', {session: false}), getDetailedCalorieInfo);
 app.post('/calories', passport.authenticate('jwt', {session: false}), addCalories); 
 app.get('/maxCalories', passport.authenticate('jwt', {session: false}), getMaxCalories);
@@ -49,10 +50,15 @@ function getCalories(req, res) {
   res.send(calorieService.getGroupedCaloriesByDay(req.query.span, req.query.date, req.user.user_id));
 }
 
+function deleteCalories(req, res) {
+  // url format:
+  // /calories?id=22
+  calorieService.deleteCalorie(req.query.id, req.user.user_id);
+}
+
 function getDetailedCalorieInfo(req, res) {
   // url format:
   // /detailedCalories?date=2018-08-07
-  console.log(req.query);
   res.send(calorieService.getDetailedCalorieInfo(req.query.date, req.user.user_id));
 }
 

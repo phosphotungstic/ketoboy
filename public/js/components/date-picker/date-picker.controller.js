@@ -9,10 +9,10 @@ function DatePickerController($http, $window, moment, _, TimeService) {
   ctrl.chosenMonth = TimeService.getCurrentMonth();
   ctrl.chosenMonthNumber = moment().month(ctrl.chosenMonth).month();
   ctrl.chosenDate = TimeService.getCurrentDate();
-  ctrl.dates = TimeService.getDates(ctrl.chosenMonth, 2018);
+  ctrl.dates = TimeService.getDates(ctrl.chosenMonthNumber + 1, 2018);
 
   ctrl.updateDates = function() {
-    ctrl.chosenMonthNumber = moment().month(ctrl.chosenMonth).month();
+    ctrl.chosenMonthNumber = moment().month(ctrl.chosenMonthNumber + 1).month();
     ctrl.dates = TimeService.getDates(ctrl.chosenMonthNumber + 1, 2018);
   };
 

@@ -10,9 +10,9 @@
   <tbody>
   <tr ng-repeat="data in $ctrl.tableData">
     <td class="ui center aligned">
-      <i class="icon link trash"></i>
+      <i class="icon link trash" ng-click="$ctrl.delete($index)"></i>
     </td>
-    <td class="single line ui center aligned">{{data.timestamp}}</td>
+    <td class="single line ui center aligned">{{$ctrl.getFormattedTime(data.timestamp)}}</td>
     <td class="ui center aligned">{{data.calorie}}</td>
     <td class="ui center aligned">{{data.note}}</td>
   </tr>

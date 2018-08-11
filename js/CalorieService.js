@@ -4,6 +4,7 @@ const moment = require("moment");
 
 module.exports = {
   getCalories: getCalories,
+  deleteCalorie: deleteCalorie,
   getGroupedCaloriesByDay: getGroupedCaloriesByDay,
   getDetailedCalorieInfo: getDetailedCalorieInfo,
   addCalories: addCalories,
@@ -16,6 +17,11 @@ function getCalories(span, startDate, userId) {
   let end = new Date(start.setDate(start.getDate() + getDayLength(span)));
   let endDate = end.toISOString().substr(0, 10);
   return dbgateway.getCalories(startDate, endDate, userId);
+}
+
+function deleteCalorie(calorieId, userId) {
+  let time = moment().format("YYYY-MM-DD hh:mm:ss");
+  dbgateway.deleteCalorie(calorieId, time, userId);
 }
 
 function getGroupedCaloriesByDay(span, startDate, userId) {

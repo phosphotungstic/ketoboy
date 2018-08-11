@@ -6,6 +6,7 @@ angular.module('ketoboy')
 function RequestService($http) {
   return {
     getCalories: getCalories,
+    deleteCalorie: deleteCalorie,
     addCalories: addCalories,
     getMaxCalories: getMaxCalories,
     updateMaxCalories: updateMaxCalories,
@@ -16,6 +17,10 @@ function RequestService($http) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return $http.get('/calories?span=' + span + '&date=' + date, {headers: headers});
+  }
+
+  function deleteCalorie(calorieId) {
+    return $http.delete('/calories?id=' + calorieId);
   }
 
   function addCalories(calories, timestamp, note) {

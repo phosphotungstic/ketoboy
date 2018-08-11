@@ -3,6 +3,7 @@ const squel = require('squel');
 
 module.exports = {
   getCalories: getCalories,
+  deleteCalorie: deleteCalorie,
   importTest: importTest,
   getDetailedCalorieInfo: getDetailedCalorieInfo,
   addCalories: addCalories,
@@ -25,7 +26,24 @@ function getCalories(startDate, endDate, userId) {
       .order("timestamp")
       .toString();
 
-  return db.prepare(query).all();
+  let calories = db.prepare(query).all();
+  db.close();
+  return calories;
+}
+
+function deleteCalorie(calorieId, time, userId) {
+  let db = new sqlite('./ketoboy.db');
+
+  let query =
+    squel.update()
+      .table('calorie')
+      .set('removed_at', time)
+      .where('calorie_id = ' + calorieId)
+      .where('user_id = ' + userId)
+      .toString();
+
+  db.prepare(query).run();
+  db.close();
 }
 
 function getDetailedCalorieInfo(chosenDate, userId) {
@@ -34,6 +52,7 @@ function getDetailedCalorieInfo(chosenDate, userId) {
   let query =
     squel.select()
       .from('calorie')
+      .field('calorie_id')
       .field('calorie')
       .field('note')
       .field('timestamp')
@@ -43,7 +62,9 @@ function getDetailedCalorieInfo(chosenDate, userId) {
       .where('removed_at isnull')
       .toString();
 
-  return db.prepare(query).all();
+  let detailedCalories = db.prepare(query).all();
+  db.close();
+  return detailedCalories;
 }
 
 function importTest() {
@@ -63,7 +84,8 @@ function addCalories(calories, timestamp, note, userId) {
       .set("note", note)
       .toString();
 
-  db.prepare(query).exec();
+  db.prepare(query).run();
+  db.close();
 }
 
 function getMaxCalories(userId) {
@@ -76,7 +98,9 @@ function getMaxCalories(userId) {
       .where('user_id = ' + userId)
       .toString();
 
-  return db.prepare(query).get();
+  let maxCalories = db.prepare(query).get();
+  db.close();
+  return maxCalories;
 }
 
 function updateMaxCalories(calories, userId) {
@@ -88,5 +112,6 @@ function updateMaxCalories(calories, userId) {
     .where("user_id = " + userId)
     .toString();
 
-  db.prepare(query).exec();
+  db.prepare(query).run();
+  db.close();
 }
