@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const assert = require('assert');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -10,13 +9,10 @@ require('./js/passport.js');
 const calorieService = require('./js/CalorieService.js');
 app.use(passport.initialize());
 
-const sqlite3 = require('sqlite3').verbose();
-const squel = require('squel');
-
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 //api
 app.get('/test', passport.authenticate('jwt', {session: false}), test);
@@ -30,7 +26,7 @@ app.patch('/maxCalories', passport.authenticate('jwt', {session: false}), update
 app.listen(3000, () => console.log('Example app listening on port 3000'));
 
 function login(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+  passport.authenticate('local', function(err, user) {
     if (err) return next(err);
     if (!user) {
       return res.status(401).json({ status: 'error', code: 'unauthorized' });
@@ -50,41 +46,27 @@ function test(req, res) {
 function getCalories(req, res) {
   // url format:
   // /calories?span=week&date=2018-05-06&groupedby=day
-  calorieService.getGroupedCaloriesByDay(req.query.span, req.query.date, req.user.user_id, sendResult(res));
+  res.send(calorieService.getGroupedCaloriesByDay(req.query.span, req.query.date, req.user.user_id));
 }
 
 function getDetailedCalorieInfo(req, res) {
   // url format:
   // /detailedCalories?date=2018-08-07
   console.log(req.query);
-  calorieService.getDetailedCalorieInfo(req.query.date, req.user.user_id, sendResult(res));
+  res.send(calorieService.getDetailedCalorieInfo(req.query.date, req.user.user_id));
 }
 
-function addCalories(req, res) {
+function addCalories(req) {
   console.log(req.body);
   console.log(req.user);
-  calorieService.addCalories(req.body.calories, req.body.timestamp, req.body.note, req.user.user_id, sendResult(res));
+  calorieService.addCalories(req.body.calories, req.body.timestamp, req.body.note, req.user.user_id);
 }
 
 function getMaxCalories(req, res) {
-  calorieService.getMaxCalories(req.user.user_id, sendResult(res));
+  res.send(calorieService.getMaxCalories(req.user.user_id));
 }
 
 function updateMaxCalories(req, res) {
   console.log(req.body);
-  calorieService.updateMaxCalories(req.body.maxCalories, req.user.user_id, sendResult(res));
+  res.send(calorieService.updateMaxCalories(req.body.maxCalories, req.user.user_id));
 }
-
-function sendResult(res) {
-  return function(results) {
-    //console.log(results);
-    res.send(results);
-  }
-}
-
-function testCallBack(a, b, c) {
-  console.log(a);
-  console.log(b);
-  console.log(c);
-}
-

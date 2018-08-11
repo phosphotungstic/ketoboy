@@ -1,13 +1,13 @@
 const passport = require('passport');
 const LocalStrategy  = require('passport-local').Strategy;
-const sqlite3 = require('sqlite3').verbose();
+const sqlite = require('better-sqlite3');
 const squel = require("squel");
 const passportJWT = require("passport-jwt");
 const JWTStrategy   = passportJWT.Strategy;
 
 
 passport.use(new LocalStrategy(function(username, password, cb) {
-  checkUser(username, password, cb);
+  cb(null, checkUser(username, password));
 }));
 
 let cookieExtractor = function(req) {
@@ -16,36 +16,25 @@ let cookieExtractor = function(req) {
 
 passport.use(new JWTStrategy({
   jwtFromRequest: cookieExtractor,
-  secretOrKey   : 'oof'
+  secretOrKey: 'oof'
 },
   function (jwtPayload, cb) {
     cb(null, jwtPayload);
   }
 ));
 
-let checkUser = function(username, password, cb) {
-  let db = new sqlite3.Database('./ketoboy.db');
-  db.serialize(function() {  
-    let query = 
-      squel.select()
-        .from('user')
-        .field('username')
-        .field('password')
-        .field('user_id')
-        .where("username = '" + username + "'")
-        .where("password = '" + password + "'")
-        .toString();
+let checkUser = function(username, password) {
+  let db = new sqlite('./ketoboy.db');
 
-    db.get(query, function(err, row) {
-        if(err) res.send('error');
-        if(row == undefined) {
-          return cb(null, false);
-        }
-        else {
-          return cb(null, row);
-        }
-    });
-  });
-  
-  db.close();
+  let query =
+    squel.select()
+      .from('user')
+      .field('username')
+      .field('password')
+      .field('user_id')
+      .where("username = '" + username + "'")
+      .where("password = '" + password + "'")
+      .toString();
+
+  return db.prepare(query).get()
 };
