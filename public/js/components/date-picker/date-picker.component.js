@@ -5,6 +5,6 @@ angular.module('ketoboy')
     templateUrl: '/js/components/date-picker/date-picker.template.html',
     controller: 'DatePickerController',
     bindings: {
-      updateGraph: "<"
+      onDateChange: "<"
     }
   });

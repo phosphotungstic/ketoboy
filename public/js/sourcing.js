@@ -3,12 +3,14 @@ import './main';
 
 import './controllers/main.controller';
 import './controllers/home.controller';
+import './controllers/in-depth.controller'
 
 import './components/insert-calorie/insert-calorie.component';
 import './components/login-form/login-form.component';
 import './components/settings-form/settings-form.component';
 import './components/week-picker/week-picker.component';
 import './components/date-picker/date-picker.component';
+import './components/calorie-detail-table/calorie-detail-table.component';
 
 import './directives/date-input.directive';
 import './directives/time-input.directive';

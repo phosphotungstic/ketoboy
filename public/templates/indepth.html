@@ -1,2 +1,11 @@
-hello
-<date-picker></date-picker>
+<br><br>
+<div ng-controller="InDepthController as $ctrl">
+  <date-picker on-date-change="$ctrl.updateData"></date-picker>
+  <br><br><br>
+  <div ng-if="$ctrl.showTable">
+    <calorie-detail-table table-data="$ctrl.detailedCalorieInfo"></calorie-detail-table>
+  </div>
+  <div ng-if="!$ctrl.showTable">
+    No data for chosen date.
+  </div>
+</div>

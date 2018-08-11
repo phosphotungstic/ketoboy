@@ -12,6 +12,7 @@ function TimeService(moment, _) {
     getMonthForBeginningOfWeek: getMonthForBeginningOfWeek,
     getSundays: getSundays,
     generateDates: generateDates,
+    toString: toString
   };
 
   function getFirstSunday(month) {
@@ -54,6 +55,9 @@ function TimeService(moment, _) {
   function toString(month, date, year) {
     if(month < 10) {
       month = "0" + month;
+    }
+    if(date < 10) {
+      date = "0" + date;
     }
     return [year, month, date].join("-");
   }

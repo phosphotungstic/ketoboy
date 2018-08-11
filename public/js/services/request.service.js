@@ -8,7 +8,8 @@ function RequestService($http) {
     getCalories: getCalories,
     addCalories: addCalories,
     getMaxCalories: getMaxCalories,
-    updateMaxCalories: updateMaxCalories
+    updateMaxCalories: updateMaxCalories,
+    getDetailedCalorieInfo: getDetailedCalorieInfo
   };
   
   function getCalories(span, date) {
@@ -32,5 +33,9 @@ function RequestService($http) {
 
   function updateMaxCalories(calories) {
     return $http.patch('/maxCalories', {maxCalories: calories});
+  }
+
+  function getDetailedCalorieInfo(date) {
+    return $http.get('/detailedCalories?date=' + date);
   }
 }

@@ -17,7 +17,8 @@ function DatePickerController($http, $window, moment, _, TimeService) {
   };
 
   ctrl.submit = function() {
-    return;
+    let dateString = TimeService.toString(ctrl.chosenMonthNumber + 1, ctrl.chosenDate, 2018);
+    ctrl.onDateChange(dateString);
   };
 
   ctrl.$onInit = function() {

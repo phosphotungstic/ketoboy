@@ -13,7 +13,8 @@ create table if not exists calorie(
   user_id INTEGER NOT NULL,
   calorie INTEGER NOT NULL,
   note CHAR(50),
-  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  removed_at TIMESTAMP DEFAULT NULL
 );
 
 create table if not exists max_calorie(

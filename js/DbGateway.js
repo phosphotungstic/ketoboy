@@ -22,6 +22,7 @@ function getCalories(startDate, endDate, userId, cb) {
         .where('user_id = ' + userId)
         .where('timestamp > "' + startDate + '"')
         .where('timestamp < "' + endDate + '"')
+        .where('removed_at  isnull')
         .order("timestamp")
         .toString();
 
@@ -52,6 +53,7 @@ function getDetailedCalorieInfo(chosenDate, userId, cb) {
         .where('user_id = ' + userId)
         .where('timestamp >= "' + chosenDate + ' 00:00:00"')
         .where('timestamp <= "' + chosenDate + ' 23:59:59"')
+        .where('removed_at  isnull')
         .toString();
 
     db.all(query, function(err, rows) {
@@ -76,7 +78,7 @@ function addCalories(calories, timestamp, note, userId, cb) {
 
   db.serialize(function() {  
     let query = 
-      squel.insert()
+      squel.insert({replaceSingleQuotes: true})
       .into("calorie")
       .set("calorie", calories)
       .set("timestamp", timestamp)
