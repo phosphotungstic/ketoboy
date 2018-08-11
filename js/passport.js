@@ -7,7 +7,7 @@ const JWTStrategy   = passportJWT.Strategy;
 
 
 passport.use(new LocalStrategy(function(username, password, cb) {
-  cb(null, checkUser(username, password));
+  return cb(null, checkUser(username, password));
 }));
 
 let cookieExtractor = function(req) {
