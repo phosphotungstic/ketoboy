@@ -10,7 +10,7 @@ function CalorieDetailTableController($http, $window, moment, _, RequestService)
     RequestService.deleteCalorie(ctrl.tableData[index].calorie_id)
       .then(function() {
         console.log('deleted');
-        ctrl.tableData.splice(0,1);
+        ctrl.tableData.splice(index,1);
       })
   };
 

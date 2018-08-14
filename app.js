@@ -54,6 +54,7 @@ function deleteCalories(req, res) {
   // url format:
   // /calories?id=22
   calorieService.deleteCalorie(req.query.id, req.user.user_id);
+  res.send('success');
 }
 
 function getDetailedCalorieInfo(req, res) {
@@ -62,10 +63,11 @@ function getDetailedCalorieInfo(req, res) {
   res.send(calorieService.getDetailedCalorieInfo(req.query.date, req.user.user_id));
 }
 
-function addCalories(req) {
+function addCalories(req, res) {
   console.log(req.body);
   console.log(req.user);
   calorieService.addCalories(req.body.calories, req.body.timestamp, req.body.note, req.user.user_id);
+  res.send('success');
 }
 
 function getMaxCalories(req, res) {
