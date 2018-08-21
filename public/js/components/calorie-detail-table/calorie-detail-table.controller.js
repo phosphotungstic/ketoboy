@@ -18,6 +18,14 @@ function CalorieDetailTableController($http, $window, moment, _, RequestService)
     return moment(dateTime).format('hh:mm A');
   };
 
+  ctrl.getCalorieSum = function() {
+    let sum = 0;
+    _.each(ctrl.tableData, function(data) {
+      sum += data.calorie;
+    });
+    return sum;
+  };
+
   ctrl.$onInit = function() {
   };
 }
