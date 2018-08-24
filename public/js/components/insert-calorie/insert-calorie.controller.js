@@ -5,16 +5,24 @@ InsertCalorieController.$inject = ['$http', '$window', 'RequestService', 'moment
 
 function InsertCalorieController($http, $window, RequestService, moment) {
   let ctrl = this;
-  ctrl.showError = false;
 
    ctrl.dateInput = new Date(moment().toISOString());
    ctrl.timeInput = new Date(moment().seconds(0).milliseconds(0).toISOString());
 
   ctrl.submit = function() {
+    ctrl.errors = {};
     if(!ctrl.calories) {
-      ctrl.showError = true;
+      ctrl.showErrors = true;
+      ctrl.errors.calories_required = true;
       return;
     }
+    if(!Number.parseInt(ctrl.calories) || Number.parseInt(ctrl.calories) < 0) {
+      ctrl.showErrors = true;
+      ctrl.errors.invalid_input = true;
+      return;
+    }
+    ctrl.showErrors = false;
+
     let date = moment(ctrl.dateInput).format('YYYY-MM-DD');
     let time = moment(ctrl.timeInput).format('HH:mm:00');
 

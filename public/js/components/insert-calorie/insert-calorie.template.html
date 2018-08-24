@@ -22,10 +22,13 @@
   <button ng-click="$ctrl.submit()" class="ui primary button">Submit</button>
 </form>
 
-<div class="ui error message" ng-if="$ctrl.showError">
+<div class="ui error message" ng-if="$ctrl.showErrors">
   <i class="close icon" ng-click="$ctrl.hideError()"></i>
-  <div class="header">
+  <div ng-if="$ctrl.errors.calories_required" class="header">
     Calorie input required.
+  </div>
+  <div ng-if="$ctrl.errors.invalid_input" class="header">
+    Incorrect calorie format.
   </div>
   Please try again.
 </div>
