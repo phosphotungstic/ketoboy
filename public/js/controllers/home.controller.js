@@ -13,7 +13,7 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
     .then(function(res) {
       //console.log(res.data)
       if(res.data) {
-        ctrl.personalCalorieData = getPersonalCalorieData(res.data);
+        ctrl.personalCalorieData = getDateBasedData(res.data);
         ctrl.calorieData = [];
         ctrl.calorieData.push(ctrl.personalCalorieData);
         RequestService.getMaxCalories()
@@ -29,25 +29,34 @@ function HomeController($scope, RequestService, _, moment, TimeService) {
             console.log(e);
           });
       }
+
+      RequestService.getWeights('week', date)
+        .then(function(res) {
+          if(res.data) {
+            ctrl.weightData = getDateBasedData(res.data);
+          }
+        })
+        .catch(function(e) {
+          console.log(e);
+        });
     });
   };
 
-  function getPersonalCalorieData(data) {
-    let personalCalorieData = [];
+  function getDateBasedData(data) {
+    let personalData = [];
     let dates = TimeService.generateDates(ctrl.beginningDate);
     _.each(dates, function(date) {
       if(data[date]) {
-        personalCalorieData.push(data[date]);
+        personalData.push(data[date]);
       }
       else {
-        personalCalorieData.push(0);
+        personalData.push(0);
       }
     });
-    return personalCalorieData;
+    return personalData;
   }
   
   ctrl.dailyLabels = moment.weekdays();
-  ctrl.weightData = [265, 259, 280, 281, 256, 255, 240];
 
   ctrl.calorieOptions = 
   {

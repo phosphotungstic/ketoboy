@@ -22,3 +22,10 @@ create table if not exists max_calorie(
   user_id INTEGER NOT NULL,
   max_calorie INTEGER NOT NULL DEFAULT 2000
 );
+
+create table if not exists weight(
+  weight_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  weight INTEGER NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_DATE NOT NULL
+);

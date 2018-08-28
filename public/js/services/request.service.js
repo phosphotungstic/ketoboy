@@ -10,7 +10,8 @@ function RequestService($http) {
     addCalories: addCalories,
     getMaxCalories: getMaxCalories,
     updateMaxCalories: updateMaxCalories,
-    getDetailedCalorieInfo: getDetailedCalorieInfo
+    getDetailedCalorieInfo: getDetailedCalorieInfo,
+    getWeights: getWeights
   };
   
   function getCalories(span, date) {
@@ -42,5 +43,11 @@ function RequestService($http) {
 
   function getDetailedCalorieInfo(date) {
     return $http.get('/detailedCalories?date=' + date);
+  }
+
+  function getWeights(span, date) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return $http.get('/weights?span=' + span + '&date=' + date, {headers: headers});
   }
 }

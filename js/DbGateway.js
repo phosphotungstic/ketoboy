@@ -8,7 +8,10 @@ module.exports = {
   getDetailedCalorieInfo: getDetailedCalorieInfo,
   addCalories: addCalories,
   getMaxCalories: getMaxCalories,
-  updateMaxCalories: updateMaxCalories
+  updateMaxCalories: updateMaxCalories,
+  getWeights: getWeights,
+  addWeight: addWeight,
+  updateWeight: updateWeight
 };
 
 function getCalories(startDate, endDate, userId) {
@@ -110,6 +113,53 @@ function updateMaxCalories(calories, userId) {
     .table("max_calorie")
     .set("max_calorie", calories)
     .where("user_id = " + userId)
+    .toString();
+
+  db.prepare(query).run();
+  db.close();
+}
+
+function getWeights(startDate, endDate, userId) {
+  let db = new sqlite('./ketoboy.db');
+
+  let query = squel.select()
+    .from("weight")
+    .field("timestamp")
+    .field("weight")
+    .where('user_id = ' + userId)
+    .where('timestamp > "' + startDate + '"')
+    .where('timestamp < "' + endDate + '"')
+    .order('timestamp')
+    .toString();
+
+    let weights = db.prepare(query).all();
+    db.close();
+    return weights;
+}
+
+function addWeight(weight, timestamp, userId) {
+  let db = new sqlite('./ketoboy.db');
+
+  let query =
+    squel.insert({replaceSingleQuotes: true})
+      .into("weight")
+      .set("weight", weight)
+      .set("timestamp", timestamp)
+      .set("user_id", userId)
+      .toString();
+
+  db.prepare(query).run();
+  db.close();
+}
+
+function updateWeight(weight, timestamp, userId) {
+  let db = new sqlite('./ketoboy.db');
+
+  let query = squel.update()
+    .table("weight")
+    .set("weight", weight)
+    .where("user_id = " + userId)
+    .where("timestamp = " + timestamp)
     .toString();
 
   db.prepare(query).run();
